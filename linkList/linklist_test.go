@@ -1,6 +1,7 @@
 package linkList
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -64,21 +65,16 @@ func Test_DeleteDuplicatesWithNoOne(t *testing.T) {
 	head1 := &ListNode{-1, &ListNode{-1, &ListNode{3, &ListNode{3, &ListNode{5, &ListNode{9, &ListNode{16, nil}}}}}}}
 	test1Want := &ListNode{5, &ListNode{9, &ListNode{16, nil}}}
 
-	cases := []struct {
+	tests := []struct {
 		name string
 		head *ListNode
 		want *ListNode
 	}{{"test1", head1, test1Want}}
 
-	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
-			get := DeleteDuplicatesWithNoOne(c.head)
-			for get != nil || c.want != nil {
-				if get.Val != c.want.Val {
-					t.Fatal("failed")
-				}
-				get = get.Next
-				c.want = c.want.Next
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := DeleteDuplicatesWithNoOne(tt.head); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteDuplicatesWithNoOne() = %v, want %v", got, tt.want)
 			}
 		})
 	}
