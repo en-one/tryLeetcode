@@ -89,6 +89,25 @@ func DeleteDuplicatesWithNoOne(head *ListNode) *ListNode {
 	return dummy.Next
 }
 
+//----------------------------------反转链表------------------------------------------
+
+// 反转一个单链表  1->3->5->7->9
+func ReverseList(head *ListNode) *ListNode {
+	var prev *ListNode
+	for head != nil {
+		// 保存当前head.Next节点，防止重新赋值后被覆盖
+		// 一轮之后状态：nil<-1 2->3->4
+		//              prev   head
+		temp := head.Next
+		head.Next = prev
+		// pre 移动
+		prev = head
+		// head 移动
+		head = temp
+	}
+	return prev
+}
+
 //----------------------------------环-----------------------------------------------
 
 // 判断链表是否有环，并返回环节点.同理于判断链表是否有环
