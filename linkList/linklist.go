@@ -108,6 +108,17 @@ func ReverseList(head *ListNode) *ListNode {
 	return prev
 }
 
+// 反转一个单链表， 递归
+func ReverseListByRecursion(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	last := ReverseListByRecursion(head.Next)
+	head.Next.Next = head
+	head.Next = nil
+	return last
+}
+
 //----------------------------------环-----------------------------------------------
 
 // 判断链表是否有环，并返回环节点.同理于判断链表是否有环
