@@ -108,7 +108,7 @@ func ReverseList(head *ListNode) *ListNode {
 	return prev
 }
 
-// 反转一个单链表， 递归
+// 反转一个单链表， 递归 1->3->5->7
 func ReverseListByRecursion(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
@@ -116,6 +116,23 @@ func ReverseListByRecursion(head *ListNode) *ListNode {
 	last := ReverseListByRecursion(head.Next)
 	head.Next.Next = head
 	head.Next = nil
+	return last
+}
+
+// 反转链表，前n个, 递归 1->3->5->7，3
+func ReverseN(head *ListNode, n int) *ListNode {
+	if n == 1 {
+		return head
+	}
+	last := ReverseN(head.Next, n-1)
+	// 此时情况类似 (head)1->(3<-5)(last)
+	// 							|
+	// 							7
+	successor := head.Next.Next
+
+	head.Next.Next = head
+	head.Next = successor
+
 	return last
 }
 
