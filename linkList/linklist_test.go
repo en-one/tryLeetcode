@@ -172,8 +172,8 @@ func TestReverseListByRecursion(t *testing.T) {
 		head *ListNode
 	}
 
-	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, nil}}}}
-	want1 := &ListNode{5, &ListNode{3, &ListNode{1, nil}}}
+	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, &ListNode{7, nil}}}}}
+	want1 := &ListNode{7, &ListNode{5, &ListNode{3, &ListNode{1, nil}}}}
 
 	args2 := args{&ListNode{1, nil}}
 	want2 := &ListNode{1, nil}
@@ -193,6 +193,32 @@ func TestReverseListByRecursion(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := ReverseListByRecursion(tt.args.head); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ReverseListByRecursion() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+// 反转链表，前n个
+func TestReverseN(t *testing.T) {
+	type args struct {
+		head *ListNode
+		n    int
+	}
+
+	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, &ListNode{7, nil}}}}, 3}
+	want1 := &ListNode{5, &ListNode{3, &ListNode{1, &ListNode{7, nil}}}}
+
+	tests := []struct {
+		name string
+		args args
+		want *ListNode
+	}{
+		{"test1", args1, want1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ReverseN(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ReverseN() = %v, want %v", got, tt.want)
 			}
 		})
 	}
