@@ -9,10 +9,10 @@ import (
 // 合并两个有序链表
 func Test_MergeTwoList(t *testing.T) {
 
-	test1L1 := &common.ListNode{1, &common.ListNode{3, &common.ListNode{5, nil}}}
-	test1L2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
-	test1Want := &common.ListNode{-1, &common.ListNode{1, &common.ListNode{2, &common.ListNode{3, &common.ListNode{5, &common.ListNode{
-		9, &common.ListNode{16, nil}}}}}}}
+	test1L1 := &common.ListNode{Val: 1, Next: &common.ListNode{Val: 3, Next: &common.ListNode{Val: 5, Next: nil}}}
+	test1L2 := &common.ListNode{Val: -1, Next: &common.ListNode{Val: 2, Next: &common.ListNode{Val: 9, Next: &common.ListNode{Val: 16, Next: nil}}}}
+	test1Want := &common.ListNode{Val: -1, Next: &common.ListNode{Val: 1, Next: &common.ListNode{Val: 2, Next: &common.ListNode{Val: 3, Next: &common.ListNode{Val: 5, Next: &common.ListNode{
+		Val: 9, Next: &common.ListNode{Val: 16, Next: nil}}}}}}}
 
 	cases := []struct {
 		name  string
@@ -30,6 +30,56 @@ func Test_MergeTwoList(t *testing.T) {
 				}
 				get = get.Next
 				c.want = c.want.Next
+			}
+		})
+	}
+}
+
+// 分隔链表
+func TestPartition(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+		x    int
+	}
+	test1 := common.ChangeSliceToListNode([]int{1, 4, 3, 2, 5, 2})
+	want1 := common.ChangeSliceToListNode([]int{1, 2, 2, 4, 3, 5})
+
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args{test1, 3}, want1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Partition(tt.args.head, tt.args.x); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Partition() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+// 合并k个有序链表
+func Test_mergeKLists(t *testing.T) {
+	type args struct {
+		lists []*common.ListNode
+	}
+	test1_1 := common.ChangeSliceToListNode([]int{1, 4, 5})
+	test1_2 := common.ChangeSliceToListNode([]int{1, 3, 4})
+	test1_3 := common.ChangeSliceToListNode([]int{2, 6})
+	want1 := common.ChangeSliceToListNode([]int{1, 1, 2, 3, 4, 4, 5, 6})
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args{[]*common.ListNode{test1_1, test1_2, test1_3}}, want1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := mergeKLists(tt.args.lists); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("mergeKLists() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -130,30 +180,6 @@ func Test_hasCycle_useQuickSlow(t *testing.T) {
 			get := detectCycleForQuickSlow(c.head)
 			if get != c.want {
 				t.Fatal("failed")
-			}
-		})
-	}
-}
-
-func TestPartition(t *testing.T) {
-	type args struct {
-		head *common.ListNode
-		x    int
-	}
-	test1 := common.ChangeSliceToListNode([]int{1, 4, 3, 2, 5, 2})
-	want1 := common.ChangeSliceToListNode([]int{1, 2, 2, 4, 3, 5})
-
-	tests := []struct {
-		name string
-		args args
-		want *common.ListNode
-	}{
-		{"test1", args{test1, 3}, want1},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Partition(tt.args.head, tt.args.x); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Partition() = %v, want %v", got, tt.want)
 			}
 		})
 	}
