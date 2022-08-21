@@ -43,28 +43,28 @@ func MergeTwoList(l1, l2 *common.ListNode) *common.ListNode {
 }
 
 // 分隔链表, 并保持原有位置
-// func Partition(head *common.ListNode, x int) *common.ListNode {
-// 	small := &common.ListNode{Val: 0}
-// 	big := &common.ListNode{Val: 0}
-// 	// headSmall := small
-// 	headBig := big
-// 	current := head
+func Partition(head *common.ListNode, x int) *common.ListNode {
+	small := &common.ListNode{Val: 0}
+	big := &common.ListNode{Val: 0}
+	headSmall := small
+	headBig := big
+	current := head
 
-// 	for current != nil {
-// 		if current.Val < x {
-// 			small.Next = current
-// 			small = small.Next
-// 		} else {
-// 			big.Next = big
-// 			big = big.Next
-// 		}
-// 		current = current.Next
-// 	}
-// 	big.Next = nil
+	for current != nil {
+		if current.Val < x {
+			small.Next = current
+			small = small.Next
+		} else {
+			big.Next = current
+			big = big.Next
+		}
+		current = current.Next
+	}
+	big.Next = nil
 
-// 	small.Next = headBig.Next
-// 	return small
-// }
+	small.Next = headBig.Next
+	return headSmall.Next
+}
 
 // ----------------------------*删除节点----------------------------------------------
 
