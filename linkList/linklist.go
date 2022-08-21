@@ -118,6 +118,23 @@ func mergeKLists(lists []*common.ListNode) *common.ListNode {
 
 }
 
+// 4、删除倒数第k个节点，核心：双指针，快指针走n-1步，快慢一起走，快指针到底时，慢指针刚好为要删除位置
+func removeNthFromEnd(head *common.ListNode, n int) *common.ListNode {
+	dummy := &common.ListNode{Val: -1}
+	dummy.Next = head
+
+	fast, slow := dummy, dummy
+	for i := 0; i < n; i++ {
+		fast = fast.Next
+	}
+	for fast.Next != nil {
+		fast = fast.Next
+		slow = slow.Next
+	}
+	slow.Next = slow.Next.Next
+	return dummy.Next
+}
+
 // ----------------------------*删除节点----------------------------------------------
 
 // DeleteDuplicatesSaveOne 删除重复节点, 使得每个节点只出现一次
