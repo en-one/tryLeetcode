@@ -184,3 +184,36 @@ func Test_hasCycle_useQuickSlow(t *testing.T) {
 		})
 	}
 }
+
+// 删除第n个结点
+func Test_removeNthFromEnd(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+		n    int
+	}
+
+	test1 := common.ChangeSliceToListNode([]int{1, 2, 3, 4, 5})
+	want1 := common.ChangeSliceToListNode([]int{1, 2, 3, 5})
+
+	test2 := common.ChangeSliceToListNode([]int{1})
+
+	test3 := common.ChangeSliceToListNode([]int{1, 2})
+	want3 := common.ChangeSliceToListNode([]int{1})
+
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args{head: test1, n: 2}, want1},
+		{"test2", args{head: test2, n: 1}, nil},
+		{"test3", args{head: test3, n: 1}, want3},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := removeNthFromEnd(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("removeNthFromEnd() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
