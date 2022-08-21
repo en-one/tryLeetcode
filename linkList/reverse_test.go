@@ -12,22 +12,19 @@ func TestReverseList(t *testing.T) {
 		head *common.ListNode
 	}
 
-	args1 := args{&common.ListNode{1, &common.ListNode{3, &common.ListNode{5, nil}}}}
-	want1 := &common.ListNode{5, &common.ListNode{3, &common.ListNode{1, nil}}}
+	test1 := common.ChangeSliceToListNode([]int{1, 3, 5})
+	want1 := common.ChangeSliceToListNode([]int{5, 3, 1})
 
-	args2 := args{&common.ListNode{1, nil}}
-	want2 := &common.ListNode{1, nil}
-
-	args3 := args{nil}
+	test2 := common.ChangeSliceToListNode([]int{1})
+	want2 := common.ChangeSliceToListNode([]int{1})
 
 	tests := []struct {
 		name string
 		args args
 		want *common.ListNode
 	}{
-		{"test1", args1, want1},
-		{"test2", args2, want2},
-		{"empty head", args3, nil},
+		{"test1", args{test1}, want1},
+		{"test2", args{test2}, want2},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

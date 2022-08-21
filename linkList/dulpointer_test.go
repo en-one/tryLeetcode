@@ -88,9 +88,9 @@ func Test_mergeKLists(t *testing.T) {
 // 判断链表环-map
 func Test_hasCycle_useMap(t *testing.T) {
 
-	head1 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
+	head1 := common.ChangeSliceToListNode([]int{-1, 2, 9, 16})
 
-	head2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
+	head2 := common.ChangeSliceToListNode([]int{-1, 2, 9, 16})
 	head2.Next.Next = head2.Next
 
 	cases := []struct {
@@ -115,9 +115,9 @@ func Test_hasCycle_useMap(t *testing.T) {
 // 判断链表环-快慢指针
 func Test_hasCycle_useQuickSlow(t *testing.T) {
 
-	head1 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
+	head1 := common.ChangeSliceToListNode([]int{-1, 2, 9, 16})
 
-	head2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
+	head2 := common.ChangeSliceToListNode([]int{-1, 2, 9, 16})
 	head2.Next.Next = head2.Next
 
 	cases := []struct {
