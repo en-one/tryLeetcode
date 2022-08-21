@@ -217,3 +217,32 @@ func Test_removeNthFromEnd(t *testing.T) {
 		})
 	}
 }
+
+// 找链表中点
+func Test_middleNode(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+	}
+
+	test1 := common.ChangeSliceToListNode([]int{1, 2, 3, 4, 5})
+	want1 := common.ChangeSliceToListNode([]int{3, 4, 5})
+
+	test2 := common.ChangeSliceToListNode([]int{1, 2, 3, 4, 5, 6})
+	want2 := common.ChangeSliceToListNode([]int{4, 5, 6})
+
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args{head: test1}, want1},
+		{"test2", args{head: test2}, want2},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := middleNode(tt.args.head); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("middleNode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
