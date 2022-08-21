@@ -3,21 +3,22 @@ package linkList
 import (
 	"reflect"
 	"testing"
+	common "tryLeetcode"
 )
 
 // 合并两个有序链表
 func Test_MergeTwoList(t *testing.T) {
 
-	test1L1 := &ListNode{1, &ListNode{3, &ListNode{5, nil}}}
-	test1L2 := &ListNode{-1, &ListNode{2, &ListNode{9, &ListNode{16, nil}}}}
-	test1Want := &ListNode{-1, &ListNode{1, &ListNode{2, &ListNode{3, &ListNode{5, &ListNode{
-		9, &ListNode{16, nil}}}}}}}
+	test1L1 := &common.ListNode{1, &common.ListNode{3, &common.ListNode{5, nil}}}
+	test1L2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
+	test1Want := &common.ListNode{-1, &common.ListNode{1, &common.ListNode{2, &common.ListNode{3, &common.ListNode{5, &common.ListNode{
+		9, &common.ListNode{16, nil}}}}}}}
 
 	cases := []struct {
 		name  string
-		list1 *ListNode
-		list2 *ListNode
-		want  *ListNode
+		list1 *common.ListNode
+		list2 *common.ListNode
+		want  *common.ListNode
 	}{{"test1", test1L1, test1L2, test1Want}}
 
 	for _, c := range cases {
@@ -37,13 +38,13 @@ func Test_MergeTwoList(t *testing.T) {
 // 删除重复节点，保留原始节点
 func Test_DeleteDuplicatesSaveOne(t *testing.T) {
 
-	head1 := &ListNode{-1, &ListNode{-1, &ListNode{3, &ListNode{3, &ListNode{5, &ListNode{9, &ListNode{16, nil}}}}}}}
-	test1Want := &ListNode{-1, &ListNode{3, &ListNode{5, &ListNode{9, &ListNode{16, nil}}}}}
+	head1 := &common.ListNode{-1, &common.ListNode{-1, &common.ListNode{3, &common.ListNode{3, &common.ListNode{5, &common.ListNode{9, &common.ListNode{16, nil}}}}}}}
+	test1Want := &common.ListNode{-1, &common.ListNode{3, &common.ListNode{5, &common.ListNode{9, &common.ListNode{16, nil}}}}}
 
 	cases := []struct {
 		name string
-		head *ListNode
-		want *ListNode
+		head *common.ListNode
+		want *common.ListNode
 	}{{"test1", head1, test1Want}}
 
 	for _, c := range cases {
@@ -62,13 +63,13 @@ func Test_DeleteDuplicatesSaveOne(t *testing.T) {
 
 // 删除重复节点,不保留重复数字
 func Test_DeleteDuplicatesWithNoOne(t *testing.T) {
-	head1 := &ListNode{-1, &ListNode{-1, &ListNode{3, &ListNode{3, &ListNode{5, &ListNode{9, &ListNode{16, nil}}}}}}}
-	test1Want := &ListNode{5, &ListNode{9, &ListNode{16, nil}}}
+	head1 := &common.ListNode{-1, &common.ListNode{-1, &common.ListNode{3, &common.ListNode{3, &common.ListNode{5, &common.ListNode{9, &common.ListNode{16, nil}}}}}}}
+	test1Want := &common.ListNode{5, &common.ListNode{9, &common.ListNode{16, nil}}}
 
 	tests := []struct {
 		name string
-		head *ListNode
-		want *ListNode
+		head *common.ListNode
+		want *common.ListNode
 	}{{"test1", head1, test1Want}}
 
 	for _, tt := range tests {
@@ -83,15 +84,15 @@ func Test_DeleteDuplicatesWithNoOne(t *testing.T) {
 // 判断链表环-map
 func Test_hasCycle_useMap(t *testing.T) {
 
-	head1 := &ListNode{-1, &ListNode{2, &ListNode{9, &ListNode{16, nil}}}}
+	head1 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
 
-	head2 := &ListNode{-1, &ListNode{2, &ListNode{9, &ListNode{16, nil}}}}
+	head2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
 	head2.Next.Next = head2.Next
 
 	cases := []struct {
 		name string
-		head *ListNode
-		want *ListNode
+		head *common.ListNode
+		want *common.ListNode
 	}{
 		{"test-hasCycle-false", head1, nil},
 		{"test-hasCycle-false", head2, head2.Next},
@@ -110,15 +111,15 @@ func Test_hasCycle_useMap(t *testing.T) {
 // 判断链表环-快慢指针
 func Test_hasCycle_useQuickSlow(t *testing.T) {
 
-	head1 := &ListNode{-1, &ListNode{2, &ListNode{9, &ListNode{16, nil}}}}
+	head1 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
 
-	head2 := &ListNode{-1, &ListNode{2, &ListNode{9, &ListNode{16, nil}}}}
+	head2 := &common.ListNode{-1, &common.ListNode{2, &common.ListNode{9, &common.ListNode{16, nil}}}}
 	head2.Next.Next = head2.Next
 
 	cases := []struct {
 		name string
-		head *ListNode
-		want *ListNode
+		head *common.ListNode
+		want *common.ListNode
 	}{
 		{"test-hasCycle-false", head1, nil},
 		{"test-hasCycle-false", head2, head2.Next},
@@ -137,21 +138,21 @@ func Test_hasCycle_useQuickSlow(t *testing.T) {
 // 反转链表
 func TestReverseList(t *testing.T) {
 	type args struct {
-		head *ListNode
+		head *common.ListNode
 	}
 
-	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, nil}}}}
-	want1 := &ListNode{5, &ListNode{3, &ListNode{1, nil}}}
+	args1 := args{&common.ListNode{1, &common.ListNode{3, &common.ListNode{5, nil}}}}
+	want1 := &common.ListNode{5, &common.ListNode{3, &common.ListNode{1, nil}}}
 
-	args2 := args{&ListNode{1, nil}}
-	want2 := &ListNode{1, nil}
+	args2 := args{&common.ListNode{1, nil}}
+	want2 := &common.ListNode{1, nil}
 
 	args3 := args{nil}
 
 	tests := []struct {
 		name string
 		args args
-		want *ListNode
+		want *common.ListNode
 	}{
 		{"test1", args1, want1},
 		{"test2", args2, want2},
@@ -169,21 +170,21 @@ func TestReverseList(t *testing.T) {
 // 反转链表， 递归
 func TestReverseListByRecursion(t *testing.T) {
 	type args struct {
-		head *ListNode
+		head *common.ListNode
 	}
 
-	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, &ListNode{7, nil}}}}}
-	want1 := &ListNode{7, &ListNode{5, &ListNode{3, &ListNode{1, nil}}}}
+	args1 := args{&common.ListNode{1, &common.ListNode{3, &common.ListNode{5, &common.ListNode{7, nil}}}}}
+	want1 := &common.ListNode{7, &common.ListNode{5, &common.ListNode{3, &common.ListNode{1, nil}}}}
 
-	args2 := args{&ListNode{1, nil}}
-	want2 := &ListNode{1, nil}
+	args2 := args{&common.ListNode{1, nil}}
+	want2 := &common.ListNode{1, nil}
 
 	args3 := args{nil}
 
 	tests := []struct {
 		name string
 		args args
-		want *ListNode
+		want *common.ListNode
 	}{
 		{"test1", args1, want1},
 		{"test2", args2, want2},
@@ -201,17 +202,17 @@ func TestReverseListByRecursion(t *testing.T) {
 // 反转链表，前n个
 func TestReverseN(t *testing.T) {
 	type args struct {
-		head *ListNode
+		head *common.ListNode
 		n    int
 	}
 
-	args1 := args{&ListNode{1, &ListNode{3, &ListNode{5, &ListNode{7, nil}}}}, 3}
-	want1 := &ListNode{5, &ListNode{3, &ListNode{1, &ListNode{7, nil}}}}
+	args1 := args{&common.ListNode{1, &common.ListNode{3, &common.ListNode{5, &common.ListNode{7, nil}}}}, 3}
+	want1 := &common.ListNode{5, &common.ListNode{3, &common.ListNode{1, &common.ListNode{7, nil}}}}
 
 	tests := []struct {
 		name string
 		args args
-		want *ListNode
+		want *common.ListNode
 	}{
 		{"test1", args1, want1},
 	}

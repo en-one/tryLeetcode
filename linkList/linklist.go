@@ -1,9 +1,6 @@
 package linkList
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import common "tryLeetcode"
 
 /*
 	核心点
@@ -18,9 +15,9 @@ type ListNode struct {
 */
 
 // MergeTwoList 合并两个有序链表, 类似归并排序
-func MergeTwoList(l1, l2 *ListNode) *ListNode {
+func MergeTwoList(l1, l2 *common.ListNode) *common.ListNode {
 
-	dummy := &ListNode{Val: 0}
+	dummy := &common.ListNode{Val: 0}
 	head := dummy
 
 	for l1 != nil && l2 != nil {
@@ -45,12 +42,34 @@ func MergeTwoList(l1, l2 *ListNode) *ListNode {
 	return dummy.Next
 }
 
-// 分隔链表
+// 分隔链表, 并保持原有位置
+// func Partition(head *common.ListNode, x int) *common.ListNode {
+// 	small := &common.ListNode{Val: 0}
+// 	big := &common.ListNode{Val: 0}
+// 	// headSmall := small
+// 	headBig := big
+// 	current := head
+
+// 	for current != nil {
+// 		if current.Val < x {
+// 			small.Next = current
+// 			small = small.Next
+// 		} else {
+// 			big.Next = big
+// 			big = big.Next
+// 		}
+// 		current = current.Next
+// 	}
+// 	big.Next = nil
+
+// 	small.Next = headBig.Next
+// 	return small
+// }
 
 // ----------------------------*删除节点----------------------------------------------
 
 // DeleteDuplicatesSaveOne 删除重复节点, 使得每个节点只出现一次
-func DeleteDuplicatesSaveOne(head *ListNode) *ListNode {
+func DeleteDuplicatesSaveOne(head *common.ListNode) *common.ListNode {
 	current := head
 	for current != nil {
 		for current.Next != nil && current.Val == current.Next.Val {
@@ -63,12 +82,12 @@ func DeleteDuplicatesSaveOne(head *ListNode) *ListNode {
 }
 
 // deleteDuplicates 删除所有重复节点
-func DeleteDuplicatesWithNoOne(head *ListNode) *ListNode {
+func DeleteDuplicatesWithNoOne(head *common.ListNode) *common.ListNode {
 	if head == nil {
 		return head
 	}
 
-	dummy := &ListNode{Val: 0}
+	dummy := &common.ListNode{Val: 0}
 	dummy.Next = head
 	head = dummy
 
@@ -90,8 +109,8 @@ func DeleteDuplicatesWithNoOne(head *ListNode) *ListNode {
 //----------------------------------反转链表------------------------------------------
 
 // 反转一个单链表  1->3->5->7->9
-func ReverseList(head *ListNode) *ListNode {
-	var prev *ListNode
+func ReverseList(head *common.ListNode) *common.ListNode {
+	var prev *common.ListNode
 	for head != nil {
 		// 保存当前head.Next节点，防止重新赋值后被覆盖
 		// 一轮之后状态：nil<-1 2->3->4
@@ -107,7 +126,7 @@ func ReverseList(head *ListNode) *ListNode {
 }
 
 // 反转一个单链表， 递归 1->3->5->7
-func ReverseListByRecursion(head *ListNode) *ListNode {
+func ReverseListByRecursion(head *common.ListNode) *common.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -118,7 +137,7 @@ func ReverseListByRecursion(head *ListNode) *ListNode {
 }
 
 // 反转链表，前n个, 递归 1->3->5->7，3
-func ReverseN(head *ListNode, n int) *ListNode {
+func ReverseN(head *common.ListNode, n int) *common.ListNode {
 	if n == 1 {
 		return head
 	}
@@ -139,8 +158,8 @@ func ReverseN(head *ListNode, n int) *ListNode {
 // 判断链表是否有环，并返回环节点.同理于判断链表是否有环
 
 // map
-func detectCycleForMap(head *ListNode) *ListNode {
-	mcycle := make(map[*ListNode]struct{}, 0)
+func detectCycleForMap(head *common.ListNode) *common.ListNode {
+	mcycle := make(map[*common.ListNode]struct{}, 0)
 
 	for head != nil {
 		if _, ok := mcycle[head]; ok {
@@ -154,7 +173,7 @@ func detectCycleForMap(head *ListNode) *ListNode {
 }
 
 // 快慢指针
-func detectCycleForQuickSlow(head *ListNode) *ListNode {
+func detectCycleForQuickSlow(head *common.ListNode) *common.ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
