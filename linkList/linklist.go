@@ -135,6 +135,16 @@ func removeNthFromEnd(head *common.ListNode, n int) *common.ListNode {
 	return dummy.Next
 }
 
+// 5、链表中点， 核心：快慢指针，快指针走两步，慢指针走一步
+func middleNode(head *common.ListNode) *common.ListNode {
+	fast, slow := head, head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	return slow
+}
+
 // ----------------------------*删除节点----------------------------------------------
 
 // DeleteDuplicatesSaveOne 删除重复节点, 使得每个节点只出现一次
