@@ -1,6 +1,9 @@
 package linkList
 
-import common "tryLeetcode"
+import (
+	"container/heap"
+	common "tryLeetcode"
+)
 
 /*
 	核心点
@@ -14,7 +17,7 @@ import common "tryLeetcode"
 		找到链表的中间节点
 */
 
-// MergeTwoList 合并两个有序链表, 类似归并排序
+// 1、MergeTwoList 合并两个有序链表, 类似归并排序
 func MergeTwoList(l1, l2 *common.ListNode) *common.ListNode {
 
 	dummy := &common.ListNode{Val: 0}
@@ -42,7 +45,7 @@ func MergeTwoList(l1, l2 *common.ListNode) *common.ListNode {
 	return dummy.Next
 }
 
-// 分隔链表, 并保持原有位置
+// 2、分隔链表, 并保持原有位置
 func Partition(head *common.ListNode, x int) *common.ListNode {
 	small := &common.ListNode{Val: 0}
 	big := &common.ListNode{Val: 0}
@@ -66,7 +69,54 @@ func Partition(head *common.ListNode, x int) *common.ListNode {
 	return headSmall.Next
 }
 
-// 合并k个有序链表，关键在于如何寻找多个链表的最小值
+// 3、合并k个有序链表
+// 思路一：遍历数组，两个链表之间进行一次合并两个有序链表
+// 思路二：最小堆关键在于如何寻找多个链表的最小值
+type minHeap []*common.ListNode
+
+// heap 确保minHeap里面的列表是顺序
+func (h minHeap) Len() int           { return len(h) }
+func (h minHeap) Less(i, j int) bool { return h[i].Val < h[j].Val }
+func (h minHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+func (h *minHeap) Push(x interface{}) {
+	// Push and Pop use pointer receivers because they modify the slice's length,
+	// not just its contents.
+	*h = append(*h, x.(*common.ListNode))
+}
+
+func (h *minHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+
+	return x
+}
+
+func mergeKLists(lists []*common.ListNode) *common.ListNode {
+	k := len(lists)
+	h := new(minHeap)
+	for i := 0; i < k; i++ {
+		if lists[i] != nil {
+			heap.Push(h, lists[i])
+		}
+	}
+
+	dummyHead := new(common.ListNode)
+	pre := dummyHead
+	for h.Len() > 0 {
+		tmp := heap.Pop(h).(*common.ListNode)
+		if tmp.Next != nil {
+			heap.Push(h, tmp.Next)
+		}
+
+		pre.Next = tmp
+		pre = pre.Next
+	}
+
+	return dummyHead.Next
+
+}
 
 // ----------------------------*删除节点----------------------------------------------
 
