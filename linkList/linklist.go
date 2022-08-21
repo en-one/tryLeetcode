@@ -34,20 +34,18 @@ func MergeTwoList(l1, l2 *ListNode) *ListNode {
 		head = head.Next
 	}
 
-	for l1 != nil {
+	if l1 != nil {
 		head.Next = l1
-		l1 = l1.Next
-		head = head.Next
 	}
 
-	for l2 != nil {
+	if l2 != nil {
 		head.Next = l2
-		l2 = l2.Next
-		head = head.Next
 	}
 
 	return dummy.Next
 }
+
+// 分隔链表
 
 // ----------------------------*删除节点----------------------------------------------
 
