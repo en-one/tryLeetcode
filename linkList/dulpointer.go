@@ -83,7 +83,6 @@ func (h *minHeap) Push(x interface{}) {
 	// not just its contents.
 	*h = append(*h, x.(*common.ListNode))
 }
-
 func (h *minHeap) Pop() interface{} {
 	old := *h
 	n := len(old)
@@ -115,7 +114,6 @@ func mergeKLists(lists []*common.ListNode) *common.ListNode {
 	}
 
 	return dummyHead.Next
-
 }
 
 // 4、删除倒数第k个节点，核心：双指针，快指针走n-1步，快慢一起走，快指针到底时，慢指针刚好为要删除位置
@@ -143,6 +141,50 @@ func middleNode(head *common.ListNode) *common.ListNode {
 		fast = fast.Next.Next
 	}
 	return slow
+}
+
+//----------------------------------环-----------------------------------------------
+
+// 6、判断链表是否有环，并返回环节点.同理于判断链表是否有环
+
+// map
+func detectCycleForMap(head *common.ListNode) *common.ListNode {
+	mcycle := make(map[*common.ListNode]struct{}, 0)
+
+	for head != nil {
+		if _, ok := mcycle[head]; ok {
+			return head
+		}
+		mcycle[head] = struct{}{}
+		head = head.Next
+	}
+
+	return nil
+}
+
+// 快慢指针
+func detectCycleForQuickSlow(head *common.ListNode) *common.ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	slow, fast := head, head.Next
+	for fast != nil && fast.Next != nil {
+		if fast == slow {
+			// 思路：快慢指针，快慢相遇之后，其中一个回到头，快慢指针步调一致一起移动，相遇点即为入环点
+			// 2nb + a = nb + a
+			slow = slow.Next
+			fast = head
+			for fast != slow {
+				fast = fast.Next
+				slow = slow.Next
+			}
+			return slow
+		}
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+
+	return nil
 }
 
 // ----------------------------*删除节点----------------------------------------------
@@ -183,48 +225,4 @@ func DeleteDuplicatesWithNoOne(head *common.ListNode) *common.ListNode {
 	}
 
 	return dummy.Next
-}
-
-//----------------------------------环-----------------------------------------------
-
-// 判断链表是否有环，并返回环节点.同理于判断链表是否有环
-
-// map
-func detectCycleForMap(head *common.ListNode) *common.ListNode {
-	mcycle := make(map[*common.ListNode]struct{}, 0)
-
-	for head != nil {
-		if _, ok := mcycle[head]; ok {
-			return head
-		}
-		mcycle[head] = struct{}{}
-		head = head.Next
-	}
-
-	return nil
-}
-
-// 快慢指针
-func detectCycleForQuickSlow(head *common.ListNode) *common.ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-	slow, fast := head, head.Next
-	for fast != nil && fast.Next != nil {
-		if fast == slow {
-			// 思路：快慢指针，快慢相遇之后，其中一个回到头，快慢指针步调一致一起移动，相遇点即为入环点
-			// 2nb + a = nb + a
-			slow = slow.Next
-			fast = head
-			for fast != slow {
-				fast = fast.Next
-				slow = slow.Next
-			}
-			return slow
-		}
-		fast = fast.Next.Next
-		slow = slow.Next
-	}
-
-	return nil
 }
