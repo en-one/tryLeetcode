@@ -176,3 +176,26 @@ func detectCycleForQuickSlow(head *common.ListNode) *common.ListNode {
 
 	return nil
 }
+
+// 7、相交链表
+func getIntersectionNode(headA, headB *common.ListNode) *common.ListNode {
+	if headA == nil || headB == nil {
+		return nil
+	}
+
+	pa, pb := headA, headB
+	for pa != pb {
+		if pa != nil {
+			pa = pa.Next
+		} else {
+			pa = headB
+		}
+
+		if pb != nil {
+			pb = pb.Next
+		} else {
+			pb = headA
+		}
+	}
+	return pa
+}
