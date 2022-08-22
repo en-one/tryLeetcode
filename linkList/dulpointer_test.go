@@ -200,3 +200,30 @@ func Test_middleNode(t *testing.T) {
 		})
 	}
 }
+
+// 找链表交点
+func Test_getIntersectionNode(t *testing.T) {
+	type args struct {
+		headA *common.ListNode
+		headB *common.ListNode
+	}
+
+	args1 := args{
+		headA: common.ChangeSliceToListNode([]int{4, 1, 8, 4, 5}),
+		headB: common.ChangeSliceToListNode([]int{5, 6, 1, 8, 4, 5}),
+	}
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args1, nil},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := getIntersectionNode(tt.args.headA, tt.args.headB); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("getIntersectionNode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
