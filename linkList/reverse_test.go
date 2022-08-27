@@ -6,6 +6,8 @@ import (
 	common "tryLeetcode"
 )
 
+//----------------------------------迭代------------------------------------------
+
 // 反转链表
 func TestReverseList(t *testing.T) {
 	type args struct {
@@ -34,6 +36,40 @@ func TestReverseList(t *testing.T) {
 		})
 	}
 }
+
+func TestReverseN(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+		b    *common.ListNode
+	}
+
+	link1 := common.ChangeSliceToListNode([]int{1, 2, 3, 5, 7})
+
+	args1 := args{link1, link1.Next.Next}
+	want1 := common.ChangeSliceToListNode([]int{2, 1})
+
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args1, want1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := ReverseN(tt.args.head, tt.args.b)
+			for tt.want != nil && got != nil {
+				if tt.want.Val != got.Val {
+					t.Errorf("ReverseN() = %v, want %v", got.Val, tt.want.Val)
+				}
+				tt.want = tt.want.Next
+				got = got.Next
+			}
+		})
+	}
+}
+
+//----------------------------------递归------------------------------------------
 
 // 反转链表， 递归
 func TestReverseListByRecursion(t *testing.T) {
@@ -68,7 +104,7 @@ func TestReverseListByRecursion(t *testing.T) {
 }
 
 // 反转链表，前n个
-func TestReverseN(t *testing.T) {
+func TestReverseNByRecursion(t *testing.T) {
 	type args struct {
 		head *common.ListNode
 		n    int
@@ -86,8 +122,35 @@ func TestReverseN(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ReverseN(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := ReverseNByRecursion(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("ReverseN() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+// k个一组反转链表
+func Test_reverseKGroup(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+		k    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *common.ListNode
+	}{
+		{"test1", args{common.ChangeSliceToListNode([]int{1, 2, 3, 4, 5}), 2}, common.ChangeSliceToListNode([]int{2, 1, 4, 3, 5})},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := reverseKGroup(tt.args.head, tt.args.k)
+			for tt.want != nil && got != nil {
+				if tt.want.Val != got.Val {
+					t.Errorf("reverseKGroup() = %v, want %v", got.Val, tt.want.Val)
+				}
+				tt.want = tt.want.Next
+				got = got.Next
 			}
 		})
 	}
