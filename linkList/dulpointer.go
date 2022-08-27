@@ -154,27 +154,26 @@ func detectCycleForMap(head *common.ListNode) *common.ListNode {
 
 // 快慢指针
 func detectCycleForQuickSlow(head *common.ListNode) *common.ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-	slow, fast := head, head.Next
+	slow, fast := head, head
 	for fast != nil && fast.Next != nil {
-		if fast == slow {
-			// 思路：快慢指针，快慢相遇之后，其中一个回到头，快慢指针步调一致一起移动，相遇点即为入环点
-			// 2nb + a = nb + a
-			slow = slow.Next
-			fast = head
-			for fast != slow {
-				fast = fast.Next
-				slow = slow.Next
-			}
-			return slow
-		}
 		fast = fast.Next.Next
 		slow = slow.Next
+		if fast == slow {
+			break
+		}
 	}
 
-	return nil
+	if fast == nil || fast.Next == nil {
+		return nil
+	}
+
+	fast = head
+	for slow != fast {
+		slow = slow.Next
+		fast = fast.Next
+	}
+
+	return fast
 }
 
 // 7、相交链表
