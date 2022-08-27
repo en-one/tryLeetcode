@@ -67,6 +67,8 @@ func ReverseNByRecursion(head *common.ListNode, n int) *common.ListNode {
 	return last
 }
 
+// 反转链表， 从m到n个 1->2->3->4->5 【2，4】
+
 //----------------------------------递归+迭代------------------------------------------
 
 // 反转单链表， k个一组， 1->2->3->4->5 2
@@ -83,4 +85,31 @@ func reverseKGroup(head *common.ListNode, k int) *common.ListNode {
 	head.Next = reverseKGroup(cur, k)
 
 	return newHead
+}
+
+//----------------------------------扩展，回文------------------------------------------
+
+// 寻找中点，反转中点后面的数据  1->2->3->2->1
+func isPalindrome(head *common.ListNode) bool {
+	slow, fast := head, head
+	for fast != nil && fast.Next != nil {
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	// 奇数个时，slow还要再往后走一步
+	if fast != nil {
+		slow = slow.Next
+	}
+	left := head
+	right := ReverseList(slow)
+
+	for right != nil {
+		if left.Val != right.Val {
+			return false
+		}
+		left = left.Next
+		right = right.Next
+	}
+
+	return true
 }
