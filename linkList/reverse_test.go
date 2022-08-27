@@ -69,6 +69,29 @@ func TestReverseN(t *testing.T) {
 	}
 }
 
+// 回文链表
+func Test_isPalindrome(t *testing.T) {
+	type args struct {
+		head *common.ListNode
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"this is a odd huiwen", args{common.ChangeSliceToListNode([]int{1, 2, 3, 2, 1})}, true},
+		{"this is a even huiwen", args{common.ChangeSliceToListNode([]int{1, 2, 2, 1})}, true},
+		{"this is not a huiwen", args{common.ChangeSliceToListNode([]int{1, 2, 3, 4, 1})}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isPalindrome(tt.args.head); got != tt.want {
+				t.Errorf("isPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 //----------------------------------递归------------------------------------------
 
 // 反转链表， 递归
