@@ -1,8 +1,10 @@
 package linkList
 
-import common "tryLeetcode"
+import (
+	common "tryLeetcode"
+)
 
-//----------------------------------反转链表------------------------------------------
+//----------------------------------迭代------------------------------------------
 
 // 反转一个单链表  1->3->5->7->9
 func ReverseList(head *common.ListNode) *common.ListNode {
@@ -21,6 +23,22 @@ func ReverseList(head *common.ListNode) *common.ListNode {
 	return prev
 }
 
+// 反转单链表， 区间 a，b,返回反转的前部分  1->3->5->7->9
+func ReverseN(head, end *common.ListNode) *common.ListNode {
+
+	var prev *common.ListNode
+	for head != end {
+		temp := head.Next
+		head.Next = prev
+		prev = head
+		head = temp
+	}
+
+	return prev
+}
+
+//----------------------------------递归------------------------------------------
+
 // 反转一个单链表， 递归 1->3->5->7
 func ReverseListByRecursion(head *common.ListNode) *common.ListNode {
 	if head == nil || head.Next == nil {
@@ -33,11 +51,11 @@ func ReverseListByRecursion(head *common.ListNode) *common.ListNode {
 }
 
 // 反转链表，前n个, 递归 1->3->5->7，3
-func ReverseN(head *common.ListNode, n int) *common.ListNode {
+func ReverseNByRecursion(head *common.ListNode, n int) *common.ListNode {
 	if n == 1 {
 		return head
 	}
-	last := ReverseN(head.Next, n-1)
+	last := ReverseNByRecursion(head.Next, n-1)
 	// 此时情况类似 (head)1->(3<-5)(last)
 	// 							|
 	// 							7
@@ -47,4 +65,22 @@ func ReverseN(head *common.ListNode, n int) *common.ListNode {
 	head.Next = successor
 
 	return last
+}
+
+//----------------------------------递归+迭代------------------------------------------
+
+// 反转单链表， k个一组， 1->2->3->4->5 2
+func reverseKGroup(head *common.ListNode, k int) *common.ListNode {
+	cur := head
+	for i := 0; i < k; i++ {
+		if cur == nil {
+			return head
+		}
+		cur = cur.Next
+	}
+
+	newHead := ReverseN(head, cur)
+	head.Next = reverseKGroup(cur, k)
+
+	return newHead
 }
