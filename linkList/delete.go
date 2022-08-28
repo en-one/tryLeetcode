@@ -4,16 +4,20 @@ import common "tryLeetcode"
 
 // ----------------------------*删除节点----------------------------------------------
 
-// DeleteDuplicatesSaveOne 删除重复节点, 使得每个节点只出现一次
+// DeleteDuplicatesSaveOne 删除重复节点, 使得每个节点只出现一次 1->1->2->2->2->3
 func DeleteDuplicatesSaveOne(head *common.ListNode) *common.ListNode {
-	current := head
-	for current != nil {
-		for current.Next != nil && current.Val == current.Next.Val {
-			current.Next = current.Next.Next
-		}
-		current = current.Next
+	if head == nil {
+		return head
 	}
-
+	slow, fast := head, head
+	for fast != nil {
+		if slow.Val != fast.Val {
+			slow.Next = fast
+			slow = slow.Next
+		}
+		fast = fast.Next
+	}
+	slow.Next = nil
 	return head
 }
 
